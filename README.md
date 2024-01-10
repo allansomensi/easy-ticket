@@ -1,0 +1,1 @@
+Projeto utilizando Django Rest Framework para a API backend e React para o frontend. Com foco na gestão de tickets de ajuda em tempo real com autenticação JWT (JSON Web Token), além de grupos e permissões de usuários personalizadas.
