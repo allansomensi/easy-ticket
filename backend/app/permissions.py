@@ -1,5 +1,6 @@
 from rest_framework import permissions
 
+
 class GlobalDefaultPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
@@ -8,7 +9,7 @@ class GlobalDefaultPermission(permissions.BasePermission):
             method=request.method,
             view=view,
         )
-        
+
         if not model_permission_codename:
             return None
 
@@ -16,7 +17,7 @@ class GlobalDefaultPermission(permissions.BasePermission):
 
     def __get_model_permission_codename(self, method, view):
         try:
-            model_name = view.queryset.model,__meta.model_name
+            model_name = view.queryset.model.__meta.model_name
             app_label = view.queryset.model._meta.app_label
             action = self.__get_action_suffix(method)
             return f'{app_label}.{action}_{model_name}'

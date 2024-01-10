@@ -7,6 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = [
-            'id', 'name', 'username', 'email', 'sector', 'extension', 
-            'gender','position', 'period', 'admission_date', 'theme_preference',
+            'id', 'name', 'username', 'email', 'sector', 'extension',
+            'gender', 'position', 'period', 'admission_date',
+            'theme_preference',
         ]
