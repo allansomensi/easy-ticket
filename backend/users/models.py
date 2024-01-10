@@ -61,18 +61,26 @@ THEME_CHOICES = (
 
 class UserProfile(AbstractUser):
     sector = models.CharField(
-        max_length=50, choices=SECTOR_CHOICES, default=None, null=True, blank=True)  # noqa: E501
+        max_length=50, choices=SECTOR_CHOICES, default=None, null=True,
+        blank=True
+    )
     extension = models.CharField(
-        blank=True, default=None, max_length=3, null=True)
+        blank=True, default=None, max_length=3, null=True
+    )
     gender = models.CharField(
-        max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
+        max_length=1, choices=GENDER_CHOICES, null=True, blank=True
+    )
     position = models.CharField(
-        max_length=100, choices=POSITION_CHOICES, null=True, blank=True)
+        max_length=100, choices=POSITION_CHOICES, null=True, blank=True
+    )
     period = models.CharField(
-        max_length=100, choices=PERIOD_CHOICES, null=True, blank=True)
+        max_length=100, choices=PERIOD_CHOICES, null=True, blank=True
+    )
     admission_date = models.DateField(null=True, blank=True)
     theme_preference = models.CharField(
-        max_length=20, choices=THEME_CHOICES, default='LIGHT', null=True, blank=True)  # noqa: E501
+        max_length=20, choices=THEME_CHOICES, default='LIGHT',
+        null=True, blank=True
+    )
 
     def get_sector_display(self):
         return dict(SECTOR_CHOICES).get(self.sector, self.sector)
@@ -87,7 +95,7 @@ class UserProfile(AbstractUser):
         return dict(PERIOD_CHOICES).get(self.period, self.period)
 
     def save(self, *args, **kwargs):
-        # Defina um tema padrão se não houver preferência definida
+        # Define um tema padrão caso não seja escolhido
         if not self.theme_preference:
             self.theme_preference = 'LIGHT'
         super().save(*args, **kwargs)
@@ -96,7 +104,7 @@ class UserProfile(AbstractUser):
         # Se last_name for fornecido, pegue apenas o último sobrenome
         last_name = self.last_name.split()[-1] if self.last_name else ""
 
-        # Combine o primeiro nome com o último sobrenome
+        # Combina o primeiro nome com o último sobrenome
         full_name = f"{self.first_name} {last_name}"
 
         return full_name.strip() if full_name.strip() else self.username
