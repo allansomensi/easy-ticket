@@ -10,9 +10,9 @@ class UserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Informações Pessoais', {
-         'fields': ('first_name', 'last_name', 'gender', 'email', 'theme_preference')}),
+         'fields': ('first_name', 'last_name', 'gender', 'email', 'theme_preference')}),  # noqa: E501
         ('Informações Profissionais', {
-         'fields': ('sector',  'extension', 'position', 'period', 'admission_date')}),
+         'fields': ('sector',  'extension', 'position', 'period', 'admission_date')}),  # noqa: E501
         ('Permissões', {'fields': ('is_active', 'is_staff',
          'is_superuser', 'groups', 'user_permissions')}),
         ('Datas Importantes', {'fields': ('date_joined', 'last_login')}),

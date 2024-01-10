@@ -61,7 +61,7 @@ THEME_CHOICES = (
 
 class UserProfile(AbstractUser):
     sector = models.CharField(
-        max_length=50, choices=SECTOR_CHOICES, default=None, null=True, blank=True)
+        max_length=50, choices=SECTOR_CHOICES, default=None, null=True, blank=True)  # noqa: E501
     extension = models.CharField(
         blank=True, default=None, max_length=3, null=True)
     gender = models.CharField(
@@ -72,7 +72,7 @@ class UserProfile(AbstractUser):
         max_length=100, choices=PERIOD_CHOICES, null=True, blank=True)
     admission_date = models.DateField(null=True, blank=True)
     theme_preference = models.CharField(
-        max_length=20, choices=THEME_CHOICES, default='LIGHT', null=True, blank=True)
+        max_length=20, choices=THEME_CHOICES, default='LIGHT', null=True, blank=True)  # noqa: E501
 
     def get_sector_display(self):
         return dict(SECTOR_CHOICES).get(self.sector, self.sector)
