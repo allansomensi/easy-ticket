@@ -6,8 +6,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = [
-            'id', 'first_name', 'last_name', 'username', 'email', 'sector',
-            'extension', 'gender', 'position', 'period', 'admission_date',
-            'theme_preference',
-        ]
+        fields = '__all__'

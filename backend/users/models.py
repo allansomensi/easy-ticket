@@ -53,52 +53,124 @@ PERIOD_CHOICES = (
     ('NAO_APLICAVEL', 'Não aplicável'),
 )
 
+NOTIFICATION_PREFERENCE_CHOICES = (
+    ('DESATIVADO', 'Desativado'),
+    ('SITE', 'Site'),
+    ('EMAIL', 'Email'),
+)
+
 THEME_CHOICES = (
+    ('AUTO', 'Automático'),
     ('LIGHT', 'Modo Claro'),
     ('DARK', 'Modo Escuro'),
 )
 
+LANGUAGE_PREFERENCE = (
+    ('PT-BR', 'Português do Brasil'),
+    ('PT-PT', 'Português de Portugal'),
+    ('EN-US', 'Inglês'),
+    ('ES-ES', 'Espanhol'),
+)
+
 
 class UserProfile(AbstractUser):
+    '''
+    Pessoal
+    '''
+
+    # Gênero
+    gender = models.CharField(
+        max_length=1, choices=GENDER_CHOICES, null=True, blank=True
+    )
+
+    '''
+    Profissional
+    '''
+
+    # Setor da empresa
     sector = models.CharField(
         max_length=50, choices=SECTOR_CHOICES, default=None, null=True,
         blank=True
     )
-    extension = models.CharField(
-        blank=True, default=None, max_length=3, null=True
-    )
-    gender = models.CharField(
-        max_length=1, choices=GENDER_CHOICES, null=True, blank=True
-    )
+    # Cargo na empresa
     position = models.CharField(
         max_length=100, choices=POSITION_CHOICES, null=True, blank=True
     )
+    # Ramal
+    extension = models.CharField(
+        blank=True, default=None, max_length=3, null=True
+    )
+    # Data de admissão na empresa
+    admission_date = models.DateField(null=True, blank=True)
+    # Turno de trabalho
     period = models.CharField(
         max_length=100, choices=PERIOD_CHOICES, null=True, blank=True
     )
-    admission_date = models.DateField(null=True, blank=True)
+
+    '''
+    Dados de Tickets
+    '''
+
+    # Numero total de tickets
+    total_tickets = models.IntegerField(
+        blank=True, default=None, null=True
+    )
+    # Numero de tickets em aberto
+    open_tickets = models.IntegerField(
+        blank=True, default=None, null=True
+    )
+    # Numero de tickets em andamento
+    in_progress_tickets = models.IntegerField(
+        blank=True, default=None, null=True
+    )
+    # Numero de tickets concluídos
+    concluded_tickets = models.IntegerField(
+        blank=True, default=None, null=True
+    )
+
+    '''
+    Preferências
+    '''
+
+    # Preferência de idioma
+    language_preference = models.CharField(
+        max_length=50, choices=LANGUAGE_PREFERENCE, default='PT-BR'
+    )
+    # Preferência de notificação
+    notification_preference = models.CharField(
+        max_length=20, choices=NOTIFICATION_PREFERENCE_CHOICES, default='SITE'
+    )
+    # Preferência de tema
     theme_preference = models.CharField(
         max_length=20, choices=THEME_CHOICES, default='LIGHT',
         null=True, blank=True
     )
 
-    def get_sector_display(self):
-        return dict(SECTOR_CHOICES).get(self.sector, self.sector)
+    '''
+    Privacidade
+    '''
 
-    def get_gender_display(self):
-        return dict(GENDER_CHOICES).get(self.gender, self.gender)
+    # Perfil privado
+    public_profile = models.BooleanField(
+        max_length=50, default=False
+    )
 
-    def get_position_display(self):
-        return dict(POSITION_CHOICES).get(self.position, self.position)
+    '''
+    Informações de acesso
+    '''
 
-    def get_period_display(self):
-        return dict(PERIOD_CHOICES).get(self.period, self.period)
-
-    def save(self, *args, **kwargs):
-        # Define um tema padrão caso não seja escolhido
-        if not self.theme_preference:
-            self.theme_preference = 'LIGHT'
-        super().save(*args, **kwargs)
+    # Sistema operacional
+    device_os = models.CharField(
+        default=None, max_length=20, null=True, blank=True
+    )
+    # IPV4 do dispositivo
+    device_ip = models.CharField(
+        default=None, max_length=30, null=True, blank=True
+    )
+    # Histórico de IPs (20 últimos)
+    device_ip_log = models.TextField(
+        default=None, max_length=3000, null=True, blank=True
+    )
 
     def __str__(self):
         # Se last_name for fornecido, pegue apenas o último sobrenome
